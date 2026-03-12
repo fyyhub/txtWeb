@@ -26,7 +26,13 @@ function clearError() {
 
 function getNoteId() {
   const params = new URLSearchParams(window.location.search);
-  return params.get("id") || "";
+  const queryId = params.get("id");
+  if (queryId) {
+    return queryId;
+  }
+
+  const routeMatch = window.location.pathname.match(/^\/note\/([^/]+)\/?$/);
+  return routeMatch ? decodeURIComponent(routeMatch[1]) : "";
 }
 
 function getBaseKey() {
