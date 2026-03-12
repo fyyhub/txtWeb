@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Read Sealed Note</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb bg-orb-a"></div>
+    <div class="bg-orb bg-orb-b"></div>
+    <main class="shell shell-narrow">
+      <section class="panel">
+        <div class="panel-heading">
+          <h1>读取私密便签</h1>
+          <p id="note-status">正在读取密文。</p>
+        </div>
+
+        <form id="unlock-form" class="stack-form hidden">
+          <label class="field">
+            <span>输入访问密码</span>
+            <input
+              id="unlock-password"
+              type="password"
+              maxlength="128"
+              placeholder="如果创建者设置了密码，需要在这里输入"
+            />
+          </label>
+          <div class="actions">
+            <button type="submit">解密内容</button>
+          </div>
+        </form>
+
+        <section id="note-error" class="error-card hidden" aria-live="assertive"></section>
+
+        <section id="note-view" class="note-view hidden">
+          <div class="note-meta-row">
+            <p id="note-meta" class="result-meta"></p>
+          </div>
+          <pre id="note-content" class="note-content"></pre>
+          <section id="attachment-card" class="attachment-card hidden">
+            <p class="result-label">附件</p>
+            <a id="attachment-link" class="result-link" href="#" download>下载附件</a>
+            <p id="attachment-meta" class="result-meta"></p>
+          </section>
+        </section>
+      </section>
+    </main>
+
+    <script type="module" src="/note.js"></script>
+  </body>
+</html>

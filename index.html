@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sealed Notes</title>
+    <meta
+      name="description"
+      content="端到端加密的私密便签，可设置密码、过期时间和阅后即焚。"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg-orb bg-orb-a"></div>
+    <div class="bg-orb bg-orb-b"></div>
+    <main class="shell">
+      <section class="hero-card">
+        <p class="eyebrow">VERCEL / E2EE / ZERO-KNOWLEDGE</p>
+        <h1>把密文交给服务器，把解密权留在浏览器。</h1>
+        <p class="lede">
+          参考 enclosed 的交互模型，支持客户端加密、链接哈希密钥、可选密码、TTL、阅后即焚，以及一个小体积附件。
+        </p>
+      </section>
+
+      <section class="panel">
+        <div class="panel-heading">
+          <h2>创建私密便签</h2>
+          <p>内容在发送前完成加密，服务端只接收元数据和密文。</p>
+        </div>
+
+        <form id="create-form" class="stack-form">
+          <label class="field">
+            <span>文本内容</span>
+            <textarea
+              id="note-text"
+              name="note"
+              rows="10"
+              maxlength="20000"
+              placeholder="输入要分享的文本。"
+              required
+            ></textarea>
+          </label>
+
+          <div class="two-col">
+            <label class="field">
+              <span>访问密码（可选）</span>
+              <input
+                id="note-password"
+                name="password"
+                type="password"
+                maxlength="128"
+                placeholder="额外增加一层口令保护"
+              />
+            </label>
+
+            <label class="field">
+              <span>有效期</span>
+              <select id="note-ttl" name="ttl">
+                <option value="300">5 分钟</option>
+                <option value="3600" selected>1 小时</option>
+                <option value="86400">24 小时</option>
+                <option value="604800">7 天</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="two-col">
+            <label class="field">
+              <span>附件（可选，最大 1 MB）</span>
+              <input id="note-file" name="file" type="file" />
+            </label>
+
+            <label class="field checkbox-field">
+              <input id="delete-after-read" name="deleteAfterRead" type="checkbox" />
+              <span>首次打开后立即销毁</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="submit-button" type="submit">加密并生成链接</button>
+            <p class="helper">
+              阅后即焚链接会在服务端读取时立即删除；若收件人输错密码，内容也不会再可恢复。
+            </p>
+          </div>
+        </form>
+
+        <section id="result-card" class="result-card hidden" aria-live="polite">
+          <div>
+            <p class="result-label">分享链接</p>
+            <a id="result-link" class="result-link" href="#"></a>
+          </div>
+          <div class="result-actions">
+            <button id="copy-link" type="button" class="secondary-button">复制链接</button>
+            <p id="result-meta" class="result-meta"></p>
+          </div>
+        </section>
+
+        <section id="error-card" class="error-card hidden" aria-live="assertive"></section>
+      </section>
+    </main>
+
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>
