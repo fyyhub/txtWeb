@@ -9,6 +9,10 @@ const resultLink = document.querySelector("#result-link");
 const resultMeta = document.querySelector("#result-meta");
 const submitButton = document.querySelector("#submit-button");
 const copyLinkButton = document.querySelector("#copy-link");
+const qrcodeContainer = document.querySelector("#qrcode-container");
+const downloadQrcodeButton = document.querySelector("#download-qrcode");
+
+let currentQrcode = null;
 
 function showError(message) {
   errorCard.textContent = message;
@@ -30,6 +34,19 @@ function showResult(url, metaText) {
   resultLink.textContent = url;
   resultMeta.textContent = metaText;
   resultCard.classList.remove("hidden");
+
+  // 清除旧的二维码
+  qrcodeContainer.innerHTML = "";
+
+  // 生成新的二维码
+  currentQrcode = new QRCode(qrcodeContainer, {
+    text: url,
+    width: 160,
+    height: 160,
+    colorDark: "#1f1712",
+    colorLight: "#fffcf7",
+    correctLevel: QRCode.CorrectLevel.M
+  });
 }
 
 createForm.addEventListener("submit", async (event) => {
@@ -111,4 +128,18 @@ copyLinkButton.addEventListener("click", async () => {
   } catch (_error) {
     showError("复制失败，请手动复制生成的链接。");
   }
+});
+
+downloadQrcodeButton.addEventListener("click", () => {
+  const canvas = qrcodeContainer.querySelector("canvas");
+
+  if (!canvas) {
+    showError("二维码尚未生成。");
+    return;
+  }
+
+  const link = document.createElement("a");
+  link.download = "sealed-note-qrcode.png";
+  link.href = canvas.toDataURL("image/png");
+  link.click();
 });
