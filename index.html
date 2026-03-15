@@ -85,13 +85,20 @@
         </form>
 
         <section id="result-card" class="result-card hidden" aria-live="polite">
-          <div>
-            <p class="result-label">分享链接</p>
-            <a id="result-link" class="result-link" href="#"></a>
-          </div>
-          <div class="result-actions">
-            <button id="copy-link" type="button" class="secondary-button">复制链接</button>
-            <p id="result-meta" class="result-meta"></p>
+          <div class="result-content">
+            <div class="result-link-section">
+              <p class="result-label">分享链接</p>
+              <a id="result-link" class="result-link" href="#"></a>
+              <div class="result-actions">
+                <button id="copy-link" type="button" class="secondary-button">复制链接</button>
+                <p id="result-meta" class="result-meta"></p>
+              </div>
+            </div>
+            <div class="result-qrcode-section">
+              <p class="result-label">扫码分享</p>
+              <div id="qrcode-container" class="qrcode-container"></div>
+              <button id="download-qrcode" type="button" class="secondary-button">下载二维码</button>
+            </div>
           </div>
         </section>
 
@@ -99,6 +106,7 @@
       </section>
     </main>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script type="module" src="/app.js"></script>
   </body>
 </html>
